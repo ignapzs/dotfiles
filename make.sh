@@ -5,7 +5,7 @@
 ############################
 
 ########## Variables
-#projectDir=~/Projects/github/dotfiles 	# dotfiles github directory
+projectDir=~/Projects/github/dotfiles 	# dotfiles github directory
 backupDir=~/Backup/dotfiles_backup      # old/existing dotfiles backup directory
 
 backupFiles () {
