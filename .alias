@@ -1,0 +1,37 @@
+# Shortcuts
+
+alias reload="source ~/.bash_profile"
+alias _="sudo"
+alias g="git"
+alias rr="rm -rf"
+
+alias dl="cd ~/Downloads"
+alias descargas="cd ~/Descargas"
+alias dt="cd ~/Desktop"
+alias et="cd ~/Escritorio"
+
+# List declared aliases, functions, paths
+
+alias aliases="alias | sed 's/=.*//'"
+alias functions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
+alias paths='echo -e ${PATH//:/\\n}'
+
+alias l="ls -lahA"
+alias ll="ls -lA"
+alias lt="ls -lhAtr"
+alias ld="ls -ld */"
+alias lp="stat -c '%a %n' *"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# Network
+
+alias ipinfo="curl -s ipinfo.io | jq"
+alias ip="ipinfo | jq -r '.ip'"
+
+
+# Miscellaneous
+alias week="date +%V"
