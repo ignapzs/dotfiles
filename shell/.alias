@@ -12,7 +12,7 @@ alias et="cd ~/Escritorio"
 
 # List declared aliases, functions, paths
 
-alias aliases="alias | sed 's/=.*//'"
+alias aliases="alias | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort"
 alias functions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
 alias paths='echo -e ${PATH//:/\\n}'
 
