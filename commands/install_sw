@@ -8,7 +8,7 @@ ANTIGEN_FOLDER=$SW_FOLDER/Antigen/
 
 installDependencies () {
   info "Updating CURL and MAKE dependencies locally (if / when prompted, enter password)"
-  sudo apt-get -qq install -y libssl-dev autoconf libtool make
+  sudo apt-get -qq install -y libssl-dev autoconf libtool make zsh
 }
 downloadAntigen () {
   info "Downloading Antigen"
@@ -17,8 +17,16 @@ downloadAntigen () {
   okey
 }
 
+installOhMyZSH() {
+  # Further installation options: https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  okey
+}
+
 install_software () {
   installDependencies
+  #installOhMyZSH
   downloadAntigen
 }
 
