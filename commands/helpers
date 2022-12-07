@@ -8,7 +8,7 @@ DOTFILES_SHELL=$PROJECT_DIR/shell
 BACKUP_DIR=$ROOT/Backup/dotfiles_backup     # old/existing dotfiles backup directory
 
 # list of files/folders to symlink in homedir
-DOTFILES_LIST="alias"
+DOTFILES_LIST="alias antigenrc"
 
 # Logging helpers
 WARN='\033[0;33m'
@@ -89,5 +89,4 @@ linkingFiles () {
     msg  "$file"
     link "$DOTFILES_SHELL"/."$file" ~/."$file"
   done
-
 }

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# import helpers
+. "$(dirname "$0")"/helpers
+
+SW_FOLDER=$ROOT/Software
+ANTIGEN_FOLDER=$SW_FOLDER/Antigen/
+
+installDependencies () {
+  info "Updating CURL and MAKE dependencies locally (if / when prompted, enter password)"
+  sudo apt-get -qq install -y libssl-dev autoconf libtool make
+}
+downloadAntigen () {
+  info "Downloading Antigen"
+  mkdir -p "$ANTIGEN_FOLDER"
+  curl -sL http://git.io/antigen > "$ANTIGEN_FOLDER"/antigen.zsh
+  okey
+}
+
+install_software () {
+  installDependencies
+  downloadAntigen
+}
+
+askAndDo install_software "Install required software?"
