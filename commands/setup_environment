@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# import helpers
+. "$(dirname "$0")"/helpers
+
+
+setup_env () {
+  backupFiles
+  downloadTheProject
+  linkingFiles
+
+}
+
+askAndDo setup_env "Setup environment?"

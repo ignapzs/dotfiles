@@ -1,0 +1,93 @@
+#!/bin/sh
+
+# Paths in project
+ROOT=~
+
+PROJECT_DIR=$ROOT/Projects/github/dotfiles 	# dotfiles github directory
+DOTFILES_SHELL=$PROJECT_DIR/shell
+BACKUP_DIR=$ROOT/Backup/dotfiles_backup     # old/existing dotfiles backup directory
+
+# list of files/folders to symlink in homedir
+DOTFILES_LIST="alias"
+
+# Logging helpers
+WARN='\033[0;33m'
+ERR='\033[0;31m'
+OKEY='\033[0;32m'
+GREY='\033[1;37m'
+NC='\033[0m'
+
+# Logging functions and variables
+okey () { echo "\033[0;32m\xE2\x9C\x94\033[0m" | iconv -f UTF-8; }
+wrn () { echo "${GREY}[${WARN}!${GREY}] ${1}${NC}"; }
+err () { echo "${GREY}[${ERR}x${GREY}] ${1}${NC}"; }
+info () { echo "${GREY}[i] ${1}${NC}"; }
+msg () { echo "${1}"; }
+date=$(date +"%Y%m%d%H%M%S")
+
+# Question functionsS
+ask () { printf "${GREY}[?] ${1} (y/n)${NC} "; }
+
+# Utility functions
+link () { ln -sFf "$1" "$2"; }
+
+# Ask then take action function
+askAndDo () {
+  ask "$2"
+  read -r option
+  case "$option" in y|Y|yes|Yes )
+    $1;
+    return;;
+  esac
+}
+
+itsDone () {
+  msg "done"
+}
+
+tick () {
+  echo "\xE2\x9C\x94" | iconv -f UTF-8
+}
+
+backupFiles () {
+	info "Creating $BACKUP_DIR for backup of any existing dotfiles"
+	mkdir -p $BACKUP_DIR
+	info "Backup of files:"
+
+  for file in $DOTFILES_LIST; do
+    msg  "$file"
+    cp ~/."$file" $BACKUP_DIR/."$file"."$date"
+  done
+
+}
+
+downloadTheProject () {
+  getCurrentRepoGit "https://github.com/ignapzs/dotfiles" $PROJECT_DIR
+}
+
+getCurrentRepoGit () {
+REPOSRC=$1
+LOCALREPO=$2
+
+LOCALREPO_VC_DIR=$LOCALREPO/.git
+
+  if [ ! -d "$LOCALREPO_VC_DIR" ]
+  then
+    info "Downloading dotfiles project from $REPOSRC"
+    git clone "$REPOSRC" "$LOCALREPO" --quiet
+  else
+    info "Updating project from $REPOSRC"
+    cd "$LOCALREPO" || exit 1
+    git pull "$REPOSRC" --quiet
+  fi
+}
+
+
+linkingFiles () {
+  info "Linking shell configs"
+  for file in $DOTFILES_LIST; do
+    msg  "$file"
+    link "$DOTFILES_SHELL"/."$file" ~/."$file"
+  done
+
+}
