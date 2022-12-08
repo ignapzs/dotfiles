@@ -31,8 +31,6 @@ installOhMyZSH() {
   # Further installation options: https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
   echo "Installing oh-my-zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-  sudo chsh -s "$(which zsh)" "$USER"
-  exit
 }
 
 install_software () {
@@ -40,6 +38,7 @@ install_software () {
   installNode
   installOhMyZSH
   downloadAntigen
+  sudo chsh -s "$(which zsh)" "$USER"
 }
 
 askAndDo install_software "Install required software?"
