@@ -10,3 +10,10 @@ Once inside the docker container:
 ```console
 apt-get update && apt-get install -y sudo curl git make
 ```
+
+After that, try
+```console
+git clone https://github.com/ignapzs/dotfiles
+cd dotfiles
+make install
+```
