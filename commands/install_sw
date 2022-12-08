@@ -10,6 +10,13 @@ installDependencies () {
   info "Updating CURL and MAKE dependencies locally (if / when prompted, enter password)"
   sudo apt-get -qq install -y libssl-dev autoconf libtool make zsh
 }
+
+installNode () {
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+  nvm use 16
+  npm install --global yarn
+}
+
 downloadAntigen () {
   info "Downloading Antigen"
   mkdir -p "$ANTIGEN_FOLDER"
@@ -27,6 +34,7 @@ installOhMyZSH() {
 
 install_software () {
   installDependencies
+  installNode
   installOhMyZSH
   downloadAntigen
 }
