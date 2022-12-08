@@ -3,6 +3,46 @@
 # import helpers
 . "$(dirname "$0")"/helpers
 
+backupFiles () {
+	info "Creating $BACKUP_DIR for backup of any existing dotfiles"
+	mkdir -p $BACKUP_DIR
+	info "Backup of files:"
+
+  for file in $DOTFILES_LIST; do
+    msg  "$file"
+    cp ~/."$file" $BACKUP_DIR/."$file"."$date"
+  done
+
+}
+
+getCurrentRepoGit () {
+REPOSRC=$1
+LOCALREPO=$2
+
+LOCALREPO_VC_DIR=$LOCALREPO/.git
+
+  if [ ! -d "$LOCALREPO_VC_DIR" ]
+  then
+    info "Downloading dotfiles project from $REPOSRC"
+    git clone "$REPOSRC" "$LOCALREPO" --quiet
+  else
+    info "Updating project from $REPOSRC"
+    cd "$LOCALREPO" || exit 1
+    git pull "$REPOSRC" --quiet
+  fi
+}
+
+downloadTheProject () {
+  getCurrentRepoGit "https://github.com/ignapzs/dotfiles" "$PROJECT_DIR"
+}
+
+linkingFiles () {
+  info "Linking shell configs"
+  for file in $DOTFILES_LIST; do
+    msg  "$file"
+    link "$DOTFILES_SHELL"/."$file" ~/."$file"
+  done
+}
 
 setup_env () {
   backupFiles
