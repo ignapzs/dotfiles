@@ -8,11 +8,14 @@ ANTIGEN_FOLDER=$SW_FOLDER/Antigen/
 
 installDependencies () {
   info "Updating CURL and MAKE dependencies locally (if / when prompted, enter password)"
-  sudo apt-get -qq install -y libssl-dev autoconf libtool make zsh
+  sudo apt-get -qq install -y libssl-dev autoconf libtool make zsh npm
 }
 
 installNode () {
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   nvm use 16
   npm install --global yarn
 }
